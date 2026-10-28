@@ -13,7 +13,7 @@
 
 ## 本機建置
 
-需要 Python 3、Node.js／npm，以及打包、安裝時使用的 PowerShell 7。依賴的上游 IPK 版本與校驗值由建置設定固定：介面來自 0.2.117，服務來自 0.2.127。下載工具會取得這些檔案供本機建置，不會將它們加入本倉庫。
+需要 Python 3.9 以上、Node.js 20 以上／npm，以及打包、安裝時使用的 PowerShell 7。依賴的上游 IPK 版本與校驗值由建置設定固定：介面來自 0.2.117，服務來自 0.2.127。下載工具會取得這些檔案供本機建置，不會將它們加入本倉庫。
 
 ```powershell
 python scripts/fetch-upstream.py
