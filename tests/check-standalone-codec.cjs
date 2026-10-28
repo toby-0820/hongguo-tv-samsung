@@ -1,0 +1,12 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const source=fs.readFileSync(__dirname+'/../build/hongguo-standalone/service/provider.js','utf8');
+const choose=vm.runInNewContext('('+source.match(/function ae\(e,t,r\)\{.*?\}(?=function se)/s)[0]+')',{I:(message)=>new Error(message)});
+const hevc={codec:'bytevc1',quality:'720P',height:720},avc={codec:'h264',quality:'540P',height:540};
+assert.equal(choose([hevc,avc],'',true).codec,'h264');
+assert.equal(choose([hevc],'',true).codec,'bytevc1');
+assert.equal(choose([avc],'720P',true).quality,'540P');
+assert.throws(()=>choose([avc],'720P',false));
+const crypto=require('crypto'),cacheKey=vm.runInNewContext('('+source.match(/function se\(e,t,n,i,o\)\{.*?\}(?=function ce)/s)[0]+')',{r:crypto});
+const legacyKey=crypto.createHash('sha256').update('series:video').digest('hex').slice(0,24);
+assert.notEqual(cacheKey('series','video','',true,'full'),legacyKey);
+console.log('PASS: AVC preference, source fallback, quality fallback, strict quality, separate cache identity');

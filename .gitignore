@@ -1,0 +1,24 @@
+# External application bundles and locally generated packages
+.cache/
+build/
+dist/
+node_modules/
+*.wgt
+*.ipk
+*.zip
+*.tar.gz
+# Signing material, local settings and viewing/account data
+*.p12
+*.pfx
+*.pem
+*.key
+*.crt
+*signature*.xml
+.env*
+local.*
+profiles/
+certificates/
+logs/
+*.mp4
+*.jsonl
+

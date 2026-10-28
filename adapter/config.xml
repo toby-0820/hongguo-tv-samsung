@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://local.hongguo.test" version="0.3.20" viewmodes="maximized">
+ <tizen:application id="HgSolo2026.Hongguo" package="HgSolo2026" required_version="5.5"/>
+ <content src="index.html"/>
+ <icon src="icon.png"/><name>紅果電視獨立版</name>
+ <tizen:profile name="tv-samsung"/><feature name="http://tizen.org/feature/web.service"/><tizen:privilege name="http://tizen.org/privilege/application.launch"/><tizen:service id="HgSolo2026.Service"><tizen:content src="service/entry.js"/><tizen:name>HongguoLocalService</tizen:name><tizen:description>On-device Hongguo local service</tizen:description></tizen:service>
+ <tizen:privilege name="http://tizen.org/privilege/internet"/>
+ <tizen:privilege name="http://tizen.org/privilege/tv.inputdevice"/><access origin="*" subdomains="true"/>
+ <tizen:setting screen-orientation="landscape" context-menu="disable" background-support="enable" encryption="disable" install-location="auto" hwkey-event="enable"/>
+ <tizen:content-security-policy>default-src * data: blob: 'unsafe-inline' 'unsafe-eval';</tizen:content-security-policy>
+</widget>
+
+
+
+

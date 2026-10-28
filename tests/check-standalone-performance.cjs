@@ -1,0 +1,22 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const app=fs.readFileSync(__dirname+'/../build/hongguo-standalone/app.js','utf8');
+const begin=app.indexOf('var hgControlPaintAt='),end=app.indexOf('function Ra()',begin);
+assert(begin>=0&&end>begin);
+let now=1000,paints=0;
+const video={duration:120,currentTime:0,paused:false,ended:false,playbackRate:1,volume:1,muted:false};
+const context={Date:{now:()=>now},Number,Math,String,ur:String,li:'',Ci:{quality:''},ki:null,u:{className:'',classList:{contains:()=>false}},m:(key,fallback)=>fallback,Ma:()=>{paints++},document:{getElementById:()=>video,querySelector:()=>({textContent:''})}};
+context.document.getElementById=id=>id==='hero-video'?video:{disabled:false,setAttribute(){},querySelector:()=>({style:{}})};
+vm.createContext(context);vm.runInContext(app.slice(begin,end),context);
+for(let i=0;i<6;i++){now=1000+i*100;video.currentTime=i/10;context.Oa();}
+assert.equal(paints,10,'Six time updates should repaint five controls only twice');
+video.paused=true;now=1550;context.Oa();assert.equal(paints,15,'Pause must repaint immediately');
+assert(app.includes('setInterval(function(){if(!R()&&("account"===fo()||!Aa()))qr()},3e4)'));
+const prefetch={module:{exports:{}},globalThis:{}};vm.createContext(prefetch);vm.runInContext(fs.readFileSync(__dirname+'/../build/hongguo-standalone/episode-prefetch.js','utf8'),prefetch);
+let lookups=0;const engine=prefetch.module.exports.create({lookup(){lookups++;return Promise.resolve(null);},prepare(){return Promise.resolve(null);}});
+engine.maybe({duration:120,position:10,active:true,started:true,stable_seconds:1,paused:false,ended:false});
+assert.equal(lookups,0,'Do not prefetch before playback is stable');
+engine.maybe({duration:120,position:10,active:true,started:true,prefetch_after_seconds:2,stable_seconds:3,paused:false,ended:false});
+setImmediate(()=>{assert.equal(lookups,1,'Start one next-episode prefetch while playing the fully cached current episode');console.log('PASS: control paint throttle, immediate pause response, reduced account polling, early prefetch after stable playback');});
+const episodes={vid_list:['1','2','3'],accessible_episode_cnt:1,episodes:[{video_id:'1',locked:false},{video_id:'2',locked:true,locked_inferred:true},{video_id:'3',locked:true,locked_inferred:false}]};
+assert.equal(prefetch.module.exports.nextUnlockedEpisodes(episodes,1,4)[0].vid,'2');
+assert.equal(prefetch.module.exports.nextUnlockedEpisodes(episodes,2,4).length,0,'Retain explicit access restrictions');
