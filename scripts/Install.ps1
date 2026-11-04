@@ -5,7 +5,7 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $repoPath = Split-Path $PSScriptRoot -Parent
-$packagePath = Join-Path $repoPath 'dist/HongguoStandalone-0.3.20-unsigned.wgt'
+$packagePath = Join-Path $repoPath 'dist/HongguoStandalone-0.3.21-unsigned.wgt'
 if (!(Test-Path -LiteralPath $InstallerPath -PathType Leaf)) { throw 'InstallerPath must point to your Apps2Samsung CLI executable.' }
 if (!(Test-Path -LiteralPath $ProfileDir -PathType Container)) { throw 'ProfileDir must point to your own Samsung signing profile directory.' }
 if (!(Test-Path -LiteralPath $packagePath)) { & (Join-Path $PSScriptRoot 'Package.ps1') }

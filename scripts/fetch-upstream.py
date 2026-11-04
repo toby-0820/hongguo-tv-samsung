@@ -7,8 +7,8 @@ import urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 INPUTS = [
-    ("117", "48661d322449464bfcb6ea2a5f63a9f512da08b84790254c1a21205cf1acb84c"),
-    ("127", "6b1fe06eff96f3520b3a728044b02d82a987b0765f1d43e16b3314e8d5fbd838"),
+    ("117", "25", "48661d322449464bfcb6ea2a5f63a9f512da08b84790254c1a21205cf1acb84c"),
+    ("147", "26", "e896cbfd4978d0625936f43f8a622282589fa23422a705291a93057a5bd02567"),
 ]
 
 
@@ -28,13 +28,13 @@ def ar_members(data):
         offset = start + size + size % 2
 
 
-for version, expected in INPUTS:
+for version, test_version, expected in INPUTS:
     cache = ROOT / ".cache" / ("upstream-" + version)
     cache.mkdir(parents=True, exist_ok=True)
     archive = cache / "upstream.ipk"
     if not archive.exists():
         url = ("https://github.com/aston314/hongguo-tv-releases/releases/download/"
-               f"webos-v0.2.{version}-test.25/hongguo-webos-0.2.{version}-test.25.ipk")
+               f"webos-v0.2.{version}-test.{test_version}/hongguo-webos-0.2.{version}-test.{test_version}.ipk")
         request = urllib.request.Request(url, headers={"User-Agent": "Samsung-adapter-build"})
         with urllib.request.urlopen(request, timeout=90) as response:
             data = response.read(8 * 1024 * 1024 + 1)

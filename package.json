@@ -1,6 +1,6 @@
 {
   "name": "hongguo-tv-samsung-adapter",
-  "version": "0.3.20",
+  "version": "0.3.21",
   "private": true,
   "description": "Samsung Tizen adaptation layer and local build tooling for an external Hongguo TV application",
   "license": "MIT",
